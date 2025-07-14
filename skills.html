@@ -460,9 +460,58 @@
             transform: scale(1.1);
             transition: transform 0.3s ease;
         }
+
+        nav {
+            margin-bottom: 3rem;
+        }
+
+        .nav-content {
+            padding: 2.5rem 2rem 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-content::before {
+            content: 'vladimir@ml-ops:~$ ';
+            position: absolute;
+            right: 2rem;
+            top: 0.8rem;
+            color: var(--primary-color);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border: 1px solid transparent;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            background: rgba(0, 255, 65, 0.1);
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
+    <nav>
+        <div class="terminal-card">
+            <div class="nav-content">
+                <a href="https://highfunk.uk" class="nav-link">home.sh</a>
+            </div>
+        </div>
+    </nav>
     <div class="container">
         <div class="skills-header">
             <h1 class="skills-title">Technical Skills</h1>
