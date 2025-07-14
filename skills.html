@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills - Vladimir Ovcharov</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00ff41;
+            --secondary-color: #008f11;
+            --accent-color: #ff0080;
+            --bg-dark: #0d1117;
+            --bg-darker: #010409;
+            --bg-card: #161b22;
+            --text-primary: #e6edf3;
+            --text-secondary: #7d8590;
+            --border-color: #30363d;
+            --terminal-green: #39ff14;
+            --matrix-green: #00ff41;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'JetBrains Mono', monospace;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-darker);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .skills-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .skills-title {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 1rem;
+        }
+
+        .skills-title::before {
+            content: '// ';
+            color: var(--primary-color);
+        }
+
+        .skills-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .skills-subtitle::before {
+            content: '> ';
+            color: var(--primary-color);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .skill-category {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .skill-category:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.2);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-right: 1rem;
+            width: 60px;
+            text-align: center;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .skills-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:last-child {
+            border-bottom: none;
+        }
+
+        .skill-item:hover {
+            background: rgba(0, 255, 65, 0.05);
+            padding-left: 1rem;
+            border-radius: 8px;
+        }
+
+        .skill-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .skill-level {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-bar {
+            width: 100px;
+            height: 8px;
+            background: var(--bg-darker);
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .skill-percentage {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            min-width: 35px;
+            text-align: right;
+        }
+
+        .certifications-section {
+            margin-top: 4rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .section-title::before {
+            content: '$ cat ';
+            color: var(--primary-color);
+        }
+
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .certification-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .certification-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 255, 65, 0.15);
+        }
+
+        .cert-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .cert-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .cert-issuer {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .cert-date {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        .experience-section {
+            margin-top: 4rem;
+        }
+
+        .experience-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .experience-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+        }
+
+        .experience-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 2rem;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .experience-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .experience-duration {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            background: rgba(0, 255, 65, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            border: 1px solid var(--primary-color);
+        }
+
+        .experience-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .experience-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: rgba(255, 0, 128, 0.1);
+            color: var(--accent-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            border: 1px solid var(--accent-color);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+        }
+
+        .projects-showcase {
+            margin-top: 4rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 255, 65, 0.15);
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .project-icon {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-right: 1rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: var(--accent-color);
+        }
+
+        .project-link i {
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .certifications-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-title {
+                font-size: 2rem;
+            }
+            
+            .experience-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* Animation for skill bars */
+        @keyframes fillSkillBar {
+            from { width: 0; }
+        }
+
+        .skill-progress {
+            animation: fillSkillBar 1.5s ease-out;
+        }
+
+        /* Hover effects for interactive elements */
+        .skill-category:hover .category-icon {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
+
+        .certification-card:hover .cert-icon {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="skills-header">
+            <h1 class="skills-title">Technical Skills</h1>
+            <p class="skills-subtitle">Comprehensive expertise in MLOps, AI infrastructure, and production-scale machine learning systems</p>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-category">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fas fa-robot"></i></div>
+                    <h3 class="category-title">ML Frameworks & Libraries</h3>
+                </div>
+                <ul class="skills-list">
+                    <li class="skill-item">
+                        <span class="skill-name">TensorFlow / Keras</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 95%;"></div></div>
+                            <span class="skill-percentage">95%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">PyTorch / Lightning</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+                            <span class="skill-percentage">90%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Scikit-learn</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 98%;"></div></div>
+                            <span class="skill-percentage">98%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">XGBoost / LightGBM</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 92%;"></div></div>
+                            <span class="skill-percentage">92%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Hugging Face Transformers</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">JAX / Flax</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 75%;"></div></div>
+                            <span class="skill-percentage">75%</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fas fa-cogs"></i></div>
+                    <h3 class="category-title">MLOps & Orchestration</h3>
+                </div>
+                <ul class="skills-list">
+                    <li class="skill-item">
+                        <span class="skill-name">Kubeflow Pipelines</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 95%;"></div></div>
+                            <span class="skill-percentage">95%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">MLflow</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 98%;"></div></div>
+                            <span class="skill-percentage">98%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Apache Airflow</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 88%;"></div></div>
+                            <span class="skill-percentage">88%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">DVC (Data Version Control)</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Weights & Biases</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+                            <span class="skill-percentage">90%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Neptune / Comet ML</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 80%;"></div></div>
+                            <span class="skill-percentage">80%</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fab fa-docker"></i></div>
+                    <h3 class="category-title">Containerization & Orchestration</h3>
+                </div>
+                <ul class="skills-list">
+                    <li class="skill-item">
+                        <span class="skill-name">Docker</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 98%;"></div></div>
+                            <span class="skill-percentage">98%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Kubernetes</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 95%;"></div></div>
+                            <span class="skill-percentage">95%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Helm</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+                            <span class="skill-percentage">90%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">KServe / Seldon</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 92%;"></div></div>
+                            <span class="skill-percentage">92%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Istio Service Mesh</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">NVIDIA Triton</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 88%;"></div></div>
+                            <span class="skill-percentage">88%</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fas fa-cloud"></i></div>
+                    <h3 class="category-title">Cloud Platforms & Services</h3>
+                </div>
+                <ul class="skills-list">
+                    <li class="skill-item">
+                        <span class="skill-name">AWS (SageMaker, EKS, Lambda)</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 95%;"></div></div>
+                            <span class="skill-percentage">95%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Google Cloud (Vertex AI, GKE)</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+                            <span class="skill-percentage">90%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Azure (Machine Learning, AKS)</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Databricks</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 88%;"></div></div>
+                            <span class="skill-percentage">88%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Terraform / Pulumi</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 92%;"></div></div>
+                            <span class="skill-percentage">92%</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fas fa-database"></i></div>
+                    <h3 class="category-title">Data Engineering & Storage</h3>
+                </div>
+                <ul class="skills-list">
+                    <li class="skill-item">
+                        <span class="skill-name">Apache Spark (PySpark)</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 92%;"></div></div>
+                            <span class="skill-percentage">92%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Apache Kafka</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Feast Feature Store</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 88%;"></div></div>
+                            <span class="skill-percentage">88%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Delta Lake / Apache Iceberg</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 82%;"></div></div>
+                            <span class="skill-percentage">82%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">PostgreSQL / MongoDB</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+                            <span class="skill-percentage">90%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Redis / Elasticsearch</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 88%;"></div></div>
+                            <span class="skill-percentage">88%</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3 class="category-title">Monitoring & Observability</h3>
+                </div>
+                <ul class="skills-list">
+                    <li class="skill-item">
+                        <span class="skill-name">Prometheus / Grafana</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 95%;"></div></div>
+                            <span class="skill-percentage">95%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">ELK Stack (Elasticsearch, Logstash, Kibana)</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 88%;"></div></div>
+                            <span class="skill-percentage">88%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Jaeger / OpenTelemetry</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Evidently AI / Alibi Detect</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+                            <span class="skill-percentage">90%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">DataDog / New Relic</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 82%;"></div></div>
+                            <span class="skill-percentage">82%</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fas fa-code"></i></div>
+                    <h3 class="category-title">Programming Languages</h3>
+                </div>
+                <ul class="skills-list">
+                    <li class="skill-item">
+                        <span class="skill-name">Python</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 98%;"></div></div>
+                            <span class="skill-percentage">98%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Go</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">SQL</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 95%;"></div></div>
+                            <span class="skill-percentage">95%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">JavaScript / TypeScript</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 80%;"></div></div>
+                            <span class="skill-percentage">80%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Bash / Shell Scripting</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+                            <span class="skill-percentage">90%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">YAML / JSON / TOML</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 95%;"></div></div>
+                            <span class="skill-percentage">95%</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="category-title">Security & Compliance</h3>
+                </div>
+                <ul class="skills-list">
+                    <li class="skill-item">
+                        <span class="skill-name">OAuth 2.0 / OIDC</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 88%;"></div></div>
+                            <span class="skill-percentage">88%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">RBAC / Policy Management</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+                            <span class="skill-percentage">90%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Vault / Secrets Management</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">GDPR / HIPAA Compliance</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 82%;"></div></div>
+                            <span class="skill-percentage">82%</span>
+                        </div>
+                    </li>
+                    <li class="skill-item">
+                        <span class="skill-name">Model Explainability (LIME, SHAP)</span>
+                        <div class="skill-level">
+                            <div class="skill-bar"><div class="skill-progress" style="width: 88%;"></div></div>
+                            <span class="skill-percentage">88%</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="certifications-section">
+            <h2 class="section-title">certifications.json</h2>
+            <div class="certifications-grid">
+                <div class="certification-card">
+                    <div class="cert-icon"><i class="fab fa-aws"></i></div>
+                    <h3 class="cert-title">AWS Certified Machine Learning - Specialty</h3>
+                    <p class="cert-issuer">Amazon Web Services</p>
+                    <p class="cert-date">Valid: 2023 - 2026</p>
+                </div>
+
+                <div class="certification-card">
+                    <div class="cert-icon"><i class="fab fa-google"></i></div>
+                    <h3 class="cert-title">Google Cloud Professional ML Engineer</h3>
+                    <p class="cert-issuer">Google Cloud</p>
+                    <p class="cert-date">Valid: 2023 - 2025</p>
+                </div>
+
+                <div class="certification-card">
+                    <div class="cert-icon"><i class="fas fa-dharmachakra"></i></div>
+                    <h3 class="cert-title">Certified Kubernetes Administrator (CKA)</h3>
+                    <p class="cert-issuer">Cloud Native Computing Foundation</p>
+                    <p class="cert-date">Valid: 2023 - 2026</p>
+                </div>
+
+                <div class="certification-card">
+                    <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+                    <h3 class="cert-title">MLOps Engineering Professional</h3>
+                    <p class="cert-issuer">MLOps Community</p>
+                    <p class="cert-date">Valid: 2024 - 2027</p>
+                </div>
+
+                <div class="certification-card">
+                    <div class="cert-icon"><i class="fab fa-microsoft"></i></div>
+                    <h3 class="cert-title">Azure AI Engineer Associate</h3>
+                    <p class="cert-issuer">Microsoft</p>
+                    <p class="cert-date">Valid: 2023 - 2025</p>
+                </div>
+
+                <div class="certification-card">
+                    <div class="cert-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3 class="cert-title">Deep Learning Specialization</h3>
+                    <p class="cert-issuer">DeepLearning.AI (Coursera)</p>
+                    <p class="cert-date">Completed: 2022</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="experience-section">
+            <h2 class="section-title">experience.log</h2>
+            <div class="experience-timeline">
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3 class="experience-title">Senior MLOps Engineer</h3>
+                        <span class="experience-duration">2022 - Present</span>
+                    </div>
+                    <p class="experience-description">
+                        Leading MLOps infrastructure design and implementation for enterprise-scale machine learning platforms. 
+                        Architected and deployed Kubeflow-based ML pipelines serving 100M+ predictions daily with 99.9% uptime.
+                        Built comprehensive monitoring and drift detection systems reducing model performance degradation by 60%.
+                    </p>
+                    <div class="experience-tech">
+                        <span class="tech-tag">Kubeflow</span>
+                        <span class="tech-tag">MLflow</span>
+                        <span class="tech-tag">Kubernetes</span>
+                        <span class="tech-tag">AWS</span>
+                        <span class="tech-tag">TensorFlow</span>
+                        <span class="tech-tag">PyTorch</span>
+                        <span class="tech-tag">Prometheus</span>
+                        <span class="tech-tag">Grafana</span>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3 class="experience-title">ML Infrastructure Engineer</h3>
+                        <span class="experience-duration">2020 - 2022</span>
+                    </div>
+                    <p class="experience-description">
+                        Developed and maintained scalable ML infrastructure supporting 50+ data scientists and ML engineers.
+                        Implemented automated model deployment pipelines reducing time-to-production from weeks to hours.
+                        Created feature stores and data validation frameworks ensuring data quality across 200+ ML models.
+                    </p>
+                    <div class="experience-tech">
+                        <span class="tech-tag">Apache Airflow</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">Jenkins</span>
+                        <span class="tech-tag">Apache Spark</span>
+                        <span class="tech-tag">Kafka</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Redis</span>
+                        <span class="tech-tag">Python</span>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3 class="experience-title">Machine Learning Engineer</h3>
+                        <span class="experience-duration">2018 - 2020</span>
+                    </div>
+                    <p class="experience-description">
+                        Built and deployed production ML models for recommendation systems, fraud detection, and NLP applications.
+                        Optimized model performance achieving 40% latency reduction while maintaining accuracy.
+                        Collaborated with product teams to integrate ML capabilities into user-facing applications.
+                    </p>
+                    <div class="experience-tech">
+                        <span class="tech-tag">Scikit-learn</span>
+                        <span class="tech-tag">XGBoost</span>
+                        <span class="tech-tag">Flask</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">MongoDB</span>
+                        <span class="tech-tag">Elasticsearch</span>
+                        <span class="tech-tag">Git</span>
+                        <span class="tech-tag">Linux</span>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3 class="experience-title">Data Scientist</h3>
+                        <span class="experience-duration">2016 - 2018</span>
+                    </div>
+                    <p class="experience-description">
+                        Performed statistical analysis and built predictive models for business intelligence applications.
+                        Developed data pipelines processing 10TB+ daily data from multiple sources.
+                        Created automated reporting systems and interactive dashboards for stakeholder decision-making.
+                    </p>
+                    <div class="experience-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">R</span>
+                        <span class="tech-tag">SQL</span>
+                        <span class="tech-tag">Pandas</span>
+                        <span class="tech-tag">NumPy</span>
+                        <span class="tech-tag">Matplotlib</span>
+                        <span class="tech-tag">Seaborn</span>
+                        <span class="tech-tag">Tableau</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="projects-showcase">
+            <h2 class="section-title">projects.yml</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon"><i class="fas fa-rocket"></i></div>
+                        <h3 class="project-title">AutoML Platform</h3>
+                    </div>
+                    <p class="project-description">
+                        Enterprise-grade automated machine learning platform built on Kubeflow. Features automated hyperparameter 
+                        tuning, model selection, and deployment with integrated monitoring and drift detection.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Kubeflow</span>
+                        <span class="tech-tag">Katib</span>
+                        <span class="tech-tag">MLflow</span>
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Go</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link"><i class="fab fa-github"></i>Source Code</a>
+                        <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i>Live Demo</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon"><i class="fas fa-eye"></i></div>
+                        <h3 class="project-title">ML Observability Suite</h3>
+                    </div>
+                    <p class="project-description">
+                        Comprehensive monitoring solution for ML models in production. Real-time drift detection, 
+                        performance tracking, and automated alerting with custom Grafana dashboards and Prometheus metrics.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Prometheus</span>
+                        <span class="tech-tag">Grafana</span>
+                        <span class="tech-tag">Evidently</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">Kubernetes</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link"><i class="fab fa-github"></i>Source Code</a>
+                        <a href="#" class="project-link"><i class="fas fa-book"></i>Documentation</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon"><i class="fas fa-database"></i></div>
+                        <h3 class="project-title">Feature Store Framework</h3>
+                    </div>
+                    <p class="project-description">
+                        Production-ready feature store implementation using Feast with real-time and batch serving capabilities. 
+                        Supports feature versioning, lineage tracking, and automated quality monitoring.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Feast</span>
+                        <span class="tech-tag">Apache Spark</span>
+                        <span class="tech-tag">Redis</span>
+                        <span class="tech-tag">BigQuery</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Terraform</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link"><i class="fab fa-github"></i>Source Code</a>
+                        <a href="#" class="project-link"><i class="fas fa-play"></i>Tutorial</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon"><i class="fas fa-robot"></i></div>
+                        <h3 class="project-title">Multi-Model Serving Platform</h3>
+                    </div>
+                    <p class="project-description">
+                        High-performance model serving platform built on KServe and NVIDIA Triton. Supports A/B testing, 
+                        canary deployments, and automatic scaling with GPU optimization for deep learning models.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">KServe</span>
+                        <span class="tech-tag">Triton</span>
+                        <span class="tech-tag">CUDA</span>
+                        <span class="tech-tag">TensorRT</span>
+                        <span class="tech-tag">Istio</span>
+                        <span class="tech-tag">Python</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link"><i class="fab fa-github"></i>Source Code</a>
+                        <a href="#" class="project-link"><i class="fas fa-chart-line"></i>Benchmarks</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3 class="project-title">ML Security Toolkit</h3>
+                    </div>
+                    <p class="project-description">
+                        Security-focused toolkit for ML pipelines including model encryption, adversarial attack detection, 
+                        differential privacy implementation, and automated security scanning for ML artifacts.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Adversarial Robustness</span>
+                        <span class="tech-tag">Differential Privacy</span>
+                        <span class="tech-tag">Model Encryption</span>
+                        <span class="tech-tag">PyTorch</span>
+                        <span class="tech-tag">TensorFlow</span>
+                        <span class="tech-tag">Cryptography</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link"><i class="fab fa-github"></i>Source Code</a>
+                        <a href="#" class="project-link"><i class="fas fa-file-pdf"></i>Research Paper</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon"><i class="fas fa-cloud"></i></div>
+                        <h3 class="project-title">Edge ML Deployment</h3>
+                    </div>
+                    <p class="project-description">
+                        Edge computing solution for deploying ML models on IoT devices and edge servers. Features model 
+                        optimization, federated learning capabilities, and efficient synchronization with cloud infrastructure.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">TensorFlow Lite</span>
+                        <span class="tech-tag">ONNX</span>
+                        <span class="tech-tag">OpenVINO</span>
+                        <span class="tech-tag">Edge Computing</span>
+                        <span class="tech-tag">Federated Learning</span>
+                        <span class="tech-tag">ARM</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link"><i class="fab fa-github"></i>Source Code</a>
+                        <a href="#" class="project-link"><i class="fas fa-microchip"></i>Hardware Guide</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animate skill bars on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const skillBars = entry.target.querySelectorAll('.skill-progress');
+                        skillBars.forEach(bar => {
+                            bar.style.animationPlayState = 'running';
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all skill categories
+            document.querySelectorAll('.skill-category').forEach(category => {
+                observer.observe(category);
+            });
+
+            // Add hover effects for skill items
+            document.querySelectorAll('.skill-item').forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    const percentage = this.querySelector('.skill-percentage');
+                    const originalText = percentage.textContent;
+                    const skillName = this.querySelector('.skill-name').textContent;
+                    
+                    // Show additional info on hover
+                    setTimeout(() => {
+                        if (this.matches(':hover')) {
+                            percentage.textContent = getSkillYears(skillName);
+                        }
+                    }, 500);
+                });
+
+                item.addEventListener('mouseleave', function() {
+                    const percentage = this.querySelector('.skill-percentage');
+                    const progress = this.querySelector('.skill-progress');
+                    const width = progress.style.width;
+                    percentage.textContent = width;
+                });
+            });
+
+            // Add click effects for project cards
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (e.target.tagName !== 'A') {
+                        this.style.transform = 'scale(0.98)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 150);
+                    }
+                });
+            });
+
+            // Add terminal-like typing effect for section titles
+            typewriterEffect();
+        });
+
+        function getSkillYears(skillName) {
+            // Map skills to years of experience
+            const skillYears = {
+                'TensorFlow / Keras': '6+ yrs',
+                'PyTorch / Lightning': '5+ yrs',
+                'Scikit-learn': '8+ yrs',
+                'Kubeflow Pipelines': '4+ yrs',
+                'MLflow': '5+ yrs',
+                'Docker': '7+ yrs',
+                'Kubernetes': '5+ yrs',
+                'AWS (SageMaker, EKS, Lambda)': '6+ yrs',
+                'Python': '8+ yrs',
+                'Prometheus / Grafana': '4+ yrs',
+                // Add more mappings as needed
+            };
+            return skillYears[skillName] || '3+ yrs';
+        }
+
+        function typewriterEffect() {
+            const titles = document.querySelectorAll('.section-title');
+            titles.forEach((title, index) => {
+                const text = title.textContent;
+                title.textContent = '';
+                
+                setTimeout(() => {
+                    let i = 0;
+                    const interval = setInterval(() => {
+                        title.textContent = text.slice(0, i + 1);
+                        i++;
+                        if (i === text.length) {
+                            clearInterval(interval);
+                        }
+                    }, 50);
+                }, index * 1000);
+            });
+        }
+
+        // Add matrix rain effect for background
+        function createMatrixRain() {
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            const container = document.body;
+            
+            for (let i = 0; i < 20; i++) {
+                const char = document.createElement('div');
+                char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                char.style.position = 'fixed';
+                char.style.left = Math.random() * 100 + '%';
+                char.style.top = '-20px';
+                char.style.color = 'rgba(0, 255, 65, 0.1)';
+                char.style.fontSize = '14px';
+                char.style.fontFamily = 'JetBrains Mono, monospace';
+                char.style.pointerEvents = 'none';
+                char.style.zIndex = '-1';
+                char.style.animation = `fall ${Math.random() * 3 + 2}s linear infinite`;
+                
+                container.appendChild(char);
+                
+                setTimeout(() => {
+                    container.removeChild(char);
+                }, 5000);
+            }
+        }
+
+        // Add CSS animation for falling characters
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                to {
+                    transform: translateY(100vh);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Create matrix rain periodically
+        setInterval(createMatrixRain, 2000);
+    </script>
+</body>
+</html>
