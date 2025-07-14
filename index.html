@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vladimir Ovcharov - MLOps & ML Engineer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00ff41;
+            --secondary-color: #008f11;
+            --accent-color: #ff0080;
+            --bg-dark: #0d1117;
+            --bg-darker: #010409;
+            --bg-card: #161b22;
+            --text-primary: #e6edf3;
+            --text-secondary: #7d8590;
+            --border-color: #30363d;
+            --terminal-green: #39ff14;
+            --matrix-green: #00ff41;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'JetBrains Mono', monospace;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-darker);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Matrix rain animation */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .matrix-char {
+            position: absolute;
+            color: var(--matrix-green);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            animation: matrixRain linear infinite;
+        }
+
+        @keyframes matrixRain {
+            0% { transform: translateY(-100vh); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .terminal-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 255, 65, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .terminal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(90deg, #ff5f56, #ffbd2e, #27ca3f);
+            border-radius: 12px 12px 0 0;
+            z-index: 1;
+        }
+
+        .terminal-card::after {
+            content: '● ● ●';
+            position: absolute;
+            top: 8px;
+            left: 15px;
+            color: var(--bg-darker);
+            font-size: 10px;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        header {
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header-content {
+            padding: 3rem 2rem 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 3rem;
+            color: var(--bg-darker);
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+        }
+
+        .avatar::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .subtitle::before {
+            content: '> ';
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            padding: 0.75rem 1.5rem;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            color: var(--bg-darker);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+            transform: translateY(-2px);
+        }
+
+        nav {
+            margin-bottom: 3rem;
+        }
+
+        .nav-content {
+            padding: 2.5rem 2rem 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-content::before {
+            content: 'vladimir@ml-ops:~$ ';
+            position: absolute;
+            right: 2rem;
+            top: 0.8rem;
+            color: var(--primary-color);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border: 1px solid transparent;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            background: rgba(0, 255, 65, 0.1);
+            transform: translateY(-2px);
+        }
+
+        main {
+            margin-bottom: 3rem;
+        }
+
+        .main-content {
+            padding: 2.5rem 2rem 2rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+            position: relative;
+            padding-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .section-title::before {
+            content: '// ';
+            color: var(--primary-color);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .article-card {
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 40px rgba(0, 255, 65, 0.2);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--bg-darker), var(--bg-card));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 3rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+        }
+
+        .article-meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .article-meta::before {
+            content: '📅 ';
+        }
+
+        .article-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .read-more:hover {
+            color: var(--accent-color);
+        }
+
+        .read-more::before {
+            content: '→ ';
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-card {
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .skill-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 255, 65, 0.2);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .skill-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .skill-card p {
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .contact-section-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .contact-item {
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .contact-item i {
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+            width: 20px;
+        }
+
+        .services-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 2rem;
+        }
+
+        .services-list li {
+            margin-bottom: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-secondary);
+        }
+
+        .services-list li i {
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--bg-darker);
+            color: var(--text-primary);
+            transition: border-color 0.3s ease;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--bg-darker);
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 65, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .code-block {
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .article-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-section-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg" id="matrix"></div>
+    
+    <div class="container">
+        <header>
+            <div class="terminal-card">
+                <div class="header-content">
+                    <div class="avatar"><i class="fas fa-terminal"></i></div>
+                    <h1>Vladimir Ovcharov</h1>
+                    <p class="subtitle">MLOps Engineer | ML Systems Architect | AI Infrastructure Specialist</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                        <a href="#" class="social-link"><i class="fab fa-docker"></i> Docker Hub</a>
+                        <a href="#" class="social-link"><i class="fab fa-kaggle"></i> Kaggle</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <nav>
+            <div class="terminal-card">
+                <div class="nav-content">
+                    <a href="#" class="nav-link active" onclick="showSection('articles')">articles.py</a>
+                    <a href="#" class="nav-link" onclick="showSection('about')">about.md</a>
+                    <a href="#" class="nav-link" onclick="showSection('skills')">skills.json</a>
+                    <a href="#" class="nav-link" onclick="showSection('contact')">contact.sh</a>
+                </div>
+            </div>
+        </nav>
+
+        <main>
+            <div class="terminal-card">
+                <div class="main-content">
+                    <div id="articles-section">
+                        <h2 class="section-title">Latest Articles</h2>
+                        <div class="article-grid">
+                            <article class="article-card">
+                                <div class="article-image"><i class="fas fa-robot"></i></div>
+                                <div class="article-content">
+                                    <h3 class="article-title">MLOps Pipeline with Kubeflow and MLflow</h3>
+                                    <div class="article-meta">July 10, 2025 • 15 min read</div>
+                                    <p class="article-excerpt">Building production-ready ML pipelines using Kubeflow for orchestration and MLflow for experiment tracking. Complete guide with code examples.</p>
+                                    <a href="#" class="read-more">Read full article</a>
+                                </div>
+                            </article>
+                            
+                            <article class="article-card">
+                                <div class="article-image"><i class="fas fa-chart-line"></i></div>
+                                <div class="article-content">
+                                    <h3 class="article-title">Model Monitoring and Drift Detection in Production</h3>
+                                    <div class="article-meta">July 5, 2025 • 12 min read</div>
+                                    <p class="article-excerpt">Implementing comprehensive monitoring solutions for ML models in production. Data drift, concept drift, and performance monitoring strategies.</p>
+                                    <a href="#" class="read-more">Read full article</a>
+                                </div>
+                            </article>
+                            
+                            <article class="article-card">
+                                <div class="article-image"><i class="fas fa-layer-group"></i></div>
+                                <div class="article-content">
+                                    <h3 class="article-title">Feature Stores: Architecture and Implementation</h3>
+                                    <div class="article-meta">July 1, 2025 • 18 min read</div>
+                                    <p class="article-excerpt">Deep dive into feature store architectures using Feast and Tecton. Managing feature consistency across training and serving.</p>
+                                    <a href="#" class="read-more">Read full article</a>
+                                </div>
+                            </article>
+                            
+                            <article class="article-card">
+                                <div class="article-image"><i class="fas fa-cogs"></i></div>
+                                <div class="article-content">
+                                    <h3 class="article-title">CI/CD for Machine Learning Models</h3>
+                                    <div class="article-meta">June 28, 2025 • 14 min read</div>
+                                    <p class="article-excerpt">Implementing continuous integration and deployment for ML models. Automated testing, model validation, and deployment strategies.</p>
+                                    <a href="#" class="read-more">Read full article</a>
+                                </div>
+                            </article>
+                            
+                            <article class="article-card">
+                                <div class="article-image"><i class="fas fa-server"></i></div>
+                                <div class="article-content">
+                                    <h3 class="article-title">Scaling ML Inference with Kubernetes and NVIDIA Triton</h3>
+                                    <div class="article-meta">June 25, 2025 • 16 min read</div>
+                                    <p class="article-excerpt">Building scalable ML inference infrastructure using Kubernetes, NVIDIA Triton Inference Server, and GPU optimization techniques.</p>
+                                    <a href="#" class="read-more">Read full article</a>
+                                </div>
+                            </article>
+                            
+                            <article class="article-card">
+                                <div class="article-image"><i class="fas fa-shield-alt"></i></div>
+                                <div class="article-content">
+                                    <h3 class="article-title">ML Security: Protecting Models and Data in Production</h3>
+                                    <div class="article-meta">June 20, 2025 • 13 min read</div>
+                                    <p class="article-excerpt">Comprehensive guide to ML security including model encryption, secure inference, data privacy, and adversarial attack prevention.</p>
+                                    <a href="#" class="read-more">Read full article</a>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+
+                    <div id="about-section" class="hidden">
+                        <h2 class="section-title">About Me</h2>
+                        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: center;">
+                            <div>
+                                <div class="avatar" style="width: 200px; height: 200px; font-size: 4rem;"><i class="fas fa-terminal"></i></div>
+                            </div>
+                            <div>
+                                <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-family: 'JetBrains Mono', monospace;">Hello! I'm Vladimir Ovcharov</h3>
+                                <p style="margin-bottom: 1rem; color: var(--text-secondary);">MLOps Engineer and ML Systems Architect with 8+ years of experience in building production-ready machine learning infrastructure. I specialize in designing scalable ML pipelines, implementing robust monitoring systems, and optimizing model deployment workflows.</p>
+                                <p style="margin-bottom: 1rem; color: var(--text-secondary);">My expertise spans across the entire ML lifecycle - from data engineering and feature stores to model serving and monitoring. I'm passionate about bridging the gap between research and production, making ML systems reliable, scalable, and maintainable.</p>
+                                <div class="code-block">
+                                    <code>
+                                        $ python -c "print('Focus areas:')"<br>
+                                        → MLOps Infrastructure<br>
+                                        → Model Deployment & Serving<br>
+                                        → ML Monitoring & Observability<br>
+                                        → Feature Engineering & Stores<br>
+                                        → ML Security & Governance
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="skills-section" class="hidden">
+                        <h2 class="section-title">Technical Skills</h2>
+                        <div class="skills-grid">
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-robot"></i></div>
+                                <h3>ML Frameworks</h3>
+                                <p>TensorFlow, PyTorch, Scikit-learn, XGBoost, Hugging Face</p>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-cogs"></i></div>
+                                <h3>MLOps Tools</h3>
+                                <p>MLflow, Kubeflow, Airflow, DVC, Weights & Biases</p>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fab fa-docker"></i></div>
+                                <h3>Containerization</h3>
+                                <p>Docker, Kubernetes, Helm, NVIDIA Triton Server</p>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-cloud"></i></div>
+                                <h3>Cloud Platforms</h3>
+                                <p>AWS SageMaker, GCP Vertex AI, Azure ML, Databricks</p>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-database"></i></div>
+                                <h3>Data Engineering</h3>
+                                <p>Apache Spark, Kafka, Feast, Delta Lake, Snowflake</p>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon"><i class="fas fa-chart-line"></i></div>
+                                <h3>Monitoring & Observability</h3>
+                                <p>Prometheus, Grafana, Evidently, Seldon, DataDog</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="contact-section" class="hidden">
+                        <h2 class="section-title">Get In Touch</h2>
+                        <div class="contact-section-grid">
+                            <div class="contact-info">
+                                <h3>Contact Information</h3>
+                                <div class="contact-item">
+                                    <i class="fas fa-phone"></i>
+                                    <strong>UK:</strong> +44 151 457 0272
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-phone"></i>
+                                    <strong>US:</strong> +1 610 557 9400
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-phone"></i>
+                                    <strong>UA:</strong> +38 096 590 4460
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <strong>Email:</strong> vladimir.ovcharov@example.com
+                                </div>
+                                <div style="margin-top: 2rem;">
+                                    <h4 style="margin-bottom: 1rem; color: var(--text-primary); font-family: 'JetBrains Mono', monospace;">Available for:</h4>
+                                    <ul class="services-list">
+                                        <li><i class="fas fa-check"></i>MLOps Infrastructure Design</li>
+                                        <li><i class="fas fa-check"></i>ML Pipeline Implementation</li>
+                                        <li><i class="fas fa-check"></i>Model Deployment & Optimization</li>
+                                        <li><i class="fas fa-check"></i>Team Training & Mentoring</li>
+                                        <li><i class="fas fa-check"></i>ML System Architecture Review</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-family: 'JetBrains Mono', monospace;">Send a Message</h3>
+                                <form>
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input type="text" id="name" name="name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" id="email" name="email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="subject">Subject</label>
+                                        <input type="text" id="subject" name="subject" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message">Message</label>
+                                        <textarea id="message" name="message" rows="4" required></textarea>
+                                    </div>
+                                    <button type="submit" class="submit-btn">Send Message</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Vladimir Ovcharov. All rights reserved. | Built with ❤️ and ☕</p>
+        </footer>
+    </div>
+
+    <script>
+        // Matrix rain effect
+        function createMatrixRain() {
+            const matrix = document.getElementById('matrix');
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            
+            for (let i = 0; i < 50; i++) {
+                const char = document.createElement('div');
+                char.className = 'matrix-char';
+                char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                char.style.left = Math.random() * 100 + '%';
+                char.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                char.style.animationDelay = Math.random() * 2 + 's';
+                matrix.appendChild(char);
+            }
+        }
+
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = ['articles', 'about', 'skills', 'contact'];
+            sections.forEach(section => {
+                document.getElementById(section + '-section').classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + '-section').classList.remove('hidden');
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! I will respond shortly.');
+            this.reset();
+        });
+
+        // Read more links
+        document.querySelectorAll('.read-more').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Here will be the full article. Add your content!');
+            });
+        });
+
+        // Initialize matrix rain
+        createMatrixRain();
+        
+        // Recreate matrix rain periodically
+        setInterval(createMatrixRain, 10000);
