@@ -288,6 +288,7 @@
             border-radius: 12px;
             overflow: hidden;
             transition: all 0.3s ease;
+            cursor: pointer;
             position: relative;
         }
 
@@ -803,6 +804,17 @@
             });
         });
 
+        // Make entire article card clickable
+        document.querySelectorAll(".article-card").forEach(card => {
+            const link = card.querySelector(".read-more");
+            if (link) {
+                card.addEventListener("click", function(e) {
+                    if (!link.contains(e.target)) {
+                        link.click();
+                    }
+                });
+            }
+        });
         // Initialize matrix rain
         createMatrixRain();
         
